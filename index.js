@@ -15,13 +15,15 @@ app.get('/', (req, res) => {
 app.use(express.static('public'));
 
 // Start the server
-const server = app.listen(100, () => {
-  console.log('Server listening on port 100');
+const server = app.listen(80, () => {
+  console.log('Server listening on port 80');
 });
 
 const io = socketio(server)
 
 io.on("connection", (socket) => {
   console.log(socket.id)
-  socket.emit("worldSize", gameinfo.size)
+  socket.emit("worldSize", gameinfo.size, (callback) => {
+    socket.emit("worldInfo", gameinfo.info)
+  })
 })

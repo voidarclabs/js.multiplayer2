@@ -4,7 +4,9 @@
     "y": 100
   },
   "info": {
-    "blocks": {},
+    "blocks": {
+      {"stone", [x: 4, y:4]}
+    },
     "players": {}
   }
 }
