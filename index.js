@@ -41,10 +41,17 @@ io.on("connection", (socket) => {
                     console.log("correct password")
                 } else {
                     console.log("user found, incorrect password")
+                    callback("incorrectPassword")
                 }
             } else {
                 console.log("no user found")
                 callback("noUser")
+            }
+        }
+
+        if (type == "register") {
+            if (users[data.username]) {
+                callback("userExists")
             }
         }
     })
