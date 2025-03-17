@@ -15,7 +15,10 @@ function login() {
     } else {
         let callback = request("login", loginInfo)
 
-        console.log(callback)
+        if (callback == "noUser") {
+            document.getElementById("loginContainer").style.display = "none"
+            document.getElementById("registerContainer").style.display = "block"
+        }
     }
 }
 

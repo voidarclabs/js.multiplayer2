@@ -37,13 +37,14 @@ io.on("connection", (socket) => {
     socket.on("request", (type, data, callback) => {
         if (type == "login") {
             if (users[data.username]) {
-                if (users[data.username] == data.password) {
+                if (users[data.username].password == data.password) {
                     console.log("correct password")
                 } else {
                     console.log("user found, incorrect password")
                 }
             } else {
                 console.log("no user found")
+                callback("noUser")
             }
         }
     })
