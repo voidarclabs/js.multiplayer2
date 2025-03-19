@@ -23,6 +23,11 @@ async function login() {
         if (callback == "incorrectPassword") {
             console.log("incorrect password")
         }
+
+        if (callback == "success") {
+            document.getElementById("loginContainer").style.display = "none"
+            document.getElementById("mainContainer").style.display = "block"
+        }
     }
 }
 
@@ -66,3 +71,7 @@ async function request(requestType, data) {
         });
     });
 }
+
+socket.on("server", (type, data, callback) =>{
+    
+})

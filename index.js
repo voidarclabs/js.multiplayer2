@@ -39,6 +39,8 @@ io.on("connection", (socket) => {
             if (users[data.username]) {
                 if (users[data.username].password == data.password) {
                     console.log("correct password")
+                    callback("success")
+                    
                 } else {
                     console.log("user found, incorrect password")
                     callback("incorrectPassword")
@@ -52,17 +54,37 @@ io.on("connection", (socket) => {
         if (type == "register") {
             if (users[data.username]) {
                 callback("userExists")
+                console.log("user found")
+            } else {
+                users[data.username] = {}
+                users[data.username]["password"] = data.password
+                console.log("user made", users[data.username])
+                callback("success")
+                saveToFiles()
             }
         }
     })
 })
 
+async function serverRequest(socket, requestType, data) {
+    return new Promise((resolve, reject) => {
+        socket.emit("server", requestType, data, (callback) => {
+            console.log(callback);
+            if (callback) {
+                resolve(callback);
+            } else {
+                reject(new Error("Request failed"));
+            }
+        });
+    });
+}
+
 function loadFiles() {
-    users = require("./users.json")
+    users = require("./game/users.json")
 }
 
 function saveToFiles() {
-    fs.writeFileSync("./users.json", users)
+    fs.writeFileSync("./game/users.json", JSON.stringify(users))
 
     loadFiles()
 }
