@@ -73,5 +73,11 @@ async function request(requestType, data) {
 }
 
 socket.on("server", (type, data, callback) =>{
+    if (type == "initialise") {
+        document.getElementById("mainContainer").innerHTML += `<div id="worldContainer" style="display:grid;grid-template-columns:repeat(300,50px);grid-template-rows:repeat(300,50px);">hi</div>`
+
+        callback()
+    }
     
+    if (type == "world") {}
 })

@@ -8,6 +8,9 @@ const { type } = require('os');
 const port = 9000
 
 let users
+let blocks
+let players
+let inventories
 
 loadFiles()
 
@@ -40,7 +43,14 @@ io.on("connection", (socket) => {
                 if (users[data.username].password == data.password) {
                     console.log("correct password")
                     callback("success")
+                    let clientCallback = serverRequest(socket, "initialise", undefined)
                     
+                    if (clientCallback) {
+                        console.log("Client Initialised")
+                        serverRequest(socket, "blocks", blocks)
+                        serverRequest(socket, "players", players)
+                    }
+
                 } else {
                     console.log("user found, incorrect password")
                     callback("incorrectPassword")
@@ -81,6 +91,10 @@ async function serverRequest(socket, requestType, data) {
 
 function loadFiles() {
     users = require("./game/users.json")
+    let world = require("./game/game.json")
+    blocks = world["world"]["blocks"]
+    players = world["world"]["players"]
+    inventories = world["inventories"]
 }
 
 function saveToFiles() {

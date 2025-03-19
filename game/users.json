@@ -1,1 +1,8 @@
-{"d":{"password":"d"},"f":{"password":"f"}}
+{
+    "d": {
+        "password": "d"
+    },
+    "f": {
+        "password": "f"
+    }
+}
